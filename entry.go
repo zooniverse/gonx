@@ -1,6 +1,7 @@
 package gonx
 
 import (
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"strings"
@@ -89,4 +90,8 @@ func (entry *Entry) Partial(fields []string) *Entry {
 		partial.SetField(name, value)
 	}
 	return partial
+}
+
+func (entry *Entry) ToJson() ([]byte, error) {
+	return json.Marshal(entry.fields)
 }
