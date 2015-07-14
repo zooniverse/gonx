@@ -14,16 +14,17 @@ type Fields map[string]string
 // threating this as a map, because inner representation is in design.
 type Entry struct {
 	fields Fields
+	raw string
 }
 
 // Creates an empty Entry to be filled later
 func NewEmptyEntry() *Entry {
-	return &Entry{make(Fields)}
+	return &Entry{make(Fields), ""}
 }
 
 // Creates an Entry with fiven fields
 func NewEntry(fields Fields) *Entry {
-	return &Entry{fields}
+	return &Entry{fields, ""}
 }
 
 // Return entry field value by name or empty string and error if it
@@ -94,4 +95,12 @@ func (entry *Entry) Partial(fields []string) *Entry {
 
 func (entry *Entry) ToJson() ([]byte, error) {
 	return json.Marshal(entry.fields)
+}
+
+func (entry *Entry) SetRaw(line string) {
+	entry.raw = line
+}
+
+func (entry *Entry) Raw() string {
+	return entry.raw
 }
